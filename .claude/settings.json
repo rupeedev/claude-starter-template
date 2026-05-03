@@ -7,6 +7,11 @@
     "Grep",
     "Bash(*)"
   ],
+  "statusLine": {
+    "type": "command",
+    "command": "bash __PROJECT_ROOT__/tools/statusline/statusline.sh",
+    "padding": 0
+  },
   "hooks": {
     "PreToolUse": [
       {

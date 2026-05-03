@@ -114,6 +114,26 @@ investment — it must catch a recurring bug, not a one-off.
 
 ---
 
+## Statusline (`tools/statusline/`)
+
+A custom status line wired in via `.claude/settings.json` shows one line at the bottom of the chat window:
+
+```
+user │ …/dir │ branch +*?  │ vX.Y.Z │ HH:MM │ [Model] N% │ $cost │ 5h: N%
+```
+
+What it surfaces that the default doesn't:
+
+- **Branch + dirty markers** (`+` staged, `*` modified, `?` untracked) — catches "wait, am I on `main`?" before an Edit fires.
+- **Context window %** with color thresholds (green <70, yellow <90, red ≥90) — your cue to consolidate or `/clear`.
+- **5-hour rate-limit %** — knowing you're at 80% before sending the next big message lets you defer instead of getting mid-task blocked.
+
+Dependencies: `jq`, `git` (optional), 24-bit truecolor terminal. Restart Claude Code after the setup command rewrites `__PROJECT_ROOT__` so the statusline takes effect.
+
+Customize the palette at lines 19-30 of the script. Full details: `tools/statusline/README.md`.
+
+---
+
 ## Local guardrails (`.githooks/` + `tools/guardrails/`)
 
 **Per-machine activation required** — run once after cloning:

@@ -25,9 +25,13 @@ review-time (memory + docs)**.
 ├── .githooks/                             ← per-machine git guardrails (activated by installer)
 │   ├── pre-commit                         ← runs check-pii.sh against staged content
 │   └── pre-push                           ← project-specific gates (smoke test, etc.)
-├── tools/guardrails/
-│   ├── check-pii.sh                       ← block real UUIDs + personal-domain emails
-│   └── install-git-hooks.sh               ← activates .githooks per machine
+├── tools/
+│   ├── guardrails/
+│   │   ├── check-pii.sh                   ← block real UUIDs + personal-domain emails
+│   │   └── install-git-hooks.sh           ← activates .githooks per machine
+│   └── statusline/
+│       ├── statusline.sh                  ← custom status line (branch · context % · cost · 5h limit)
+│       └── README.md                      ← what each segment shows + customizing the palette
 └── README.md (this file)
 ```
 
@@ -219,5 +223,6 @@ any project is:
    the dev machine (check-pii.sh).
 5. A slash command that **forces** thinking before coding (ready-to-code).
 6. A slash command that **standardises** the ship-it sequence (ship).
+7. A statusline that surfaces **what you actually need to see** every turn — branch + dirty markers, context % with thresholds, 5-hour rate-limit % (so you know to wrap up before getting blocked).
 
 Everything else is optional. Start here, grow from here.
