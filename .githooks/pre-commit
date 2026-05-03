@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# Pre-commit guardrails. Runs against STAGED content, BEFORE the data leaves
+# the dev machine. Activated per-machine via `bash tools/guardrails/install-git-hooks.sh`.
+#
+# Why pre-commit (not pre-push, not CI-only): once data reaches GitHub, even
+# a green CI guardrail can't unleak it. Pre-commit is the only line of
+# defense that actually prevents the leak.
+set -euo pipefail
+
+cd "$(git rev-parse --show-toplevel)"
+
+if git diff --cached --quiet; then
+  exit 0
+fi
+
+# Add project-specific checks below as the codebase grows.
+# Each script must support `--cached` mode and exit non-zero on violation.
+
+bash tools/guardrails/check-pii.sh --cached
+
+# Optional: run lint-staged if package.json present and configured. Comment
+# out for non-Node projects.
+if command -v npx >/dev/null 2>&1 && [ -f package.json ] && grep -q '"lint-staged"' package.json; then
+  npx --no-install lint-staged
+fi

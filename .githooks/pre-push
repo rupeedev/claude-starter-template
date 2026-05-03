@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# Pre-push guardrails. Runs against the commits about to be pushed.
+# Activated per-machine via `bash tools/guardrails/install-git-hooks.sh`.
+#
+# This template ships an empty pre-push by design — most pre-push checks are
+# project-specific (e.g. curl-smoke against the dev API, run integration
+# tests, verify migrations apply against a local DB). Add them below.
+#
+# Pattern: read remote/local refs from stdin, filter to pushes-to-main, run
+# the gate. Allow a `# smoke-tested` marker on the commit message OR an
+# environment variable to bypass when explicitly OK'd by the operator.
+set -euo pipefail
+
+cd "$(git rev-parse --show-toplevel)"
+
+while read -r local_ref local_sha remote_ref remote_sha; do
+  [ -z "${local_ref:-}" ] && continue
+  case "$remote_ref" in
+    refs/heads/main|refs/heads/master) ;;
+    *) continue ;;
+  esac
+
+  # Project-specific gates go here. Keep them fast (< 30 sec) — slow checks
+  # belong in CI, not pre-push.
+  #
+  # Example (uncomment + customize):
+  # if git diff --name-only "$remote_sha" "$local_sha" | grep -qE '^(src|crates)/'; then
+  #   if [ "${PROJECT_SMOKE_TESTED:-}" != "1" ]; then
+  #     echo "BLOCKED: backend/route changes require a smoke test" >&2
+  #     echo "Run the local smoke test, then re-push with PROJECT_SMOKE_TESTED=1" >&2
+  #     exit 1
+  #   fi
+  # fi
+
+  :  # no-op placeholder; remove once a real gate is added
+done
+
+exit 0

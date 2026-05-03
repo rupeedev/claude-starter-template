@@ -1,0 +1,19 @@
+# Per-machine Claude Code overrides (permissions, local-only settings).
+# Each contributor maintains their own.
+.claude/settings.local.json
+
+# Per-machine OS / editor noise.
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/
+
+# Common build / cache noise. Add language-specific ignores per project.
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+.env
+.env.local

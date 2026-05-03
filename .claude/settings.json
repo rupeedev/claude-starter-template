@@ -1,0 +1,65 @@
+{
+  "allowedTools": [
+    "Read",
+    "Edit",
+    "Write",
+    "Glob",
+    "Grep",
+    "Bash(*)"
+  ],
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash __PROJECT_ROOT__/.claude/hooks/precode-checklist.sh"
+          },
+          {
+            "type": "command",
+            "command": "bash __PROJECT_ROOT__/.claude/hooks/responsive-classcheck.sh"
+          },
+          {
+            "type": "command",
+            "command": "bash __PROJECT_ROOT__/.claude/hooks/limit-bump-investigate-first.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash __PROJECT_ROOT__/.claude/hooks/precode-checklist.sh"
+          },
+          {
+            "type": "command",
+            "command": "bash __PROJECT_ROOT__/.claude/hooks/responsive-classcheck.sh"
+          },
+          {
+            "type": "command",
+            "command": "bash __PROJECT_ROOT__/.claude/hooks/limit-bump-investigate-first.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash __PROJECT_ROOT__/.claude/hooks/precode-checklist.sh"
+          },
+          {
+            "type": "command",
+            "command": "bash __PROJECT_ROOT__/.claude/hooks/responsive-classcheck.sh"
+          },
+          {
+            "type": "command",
+            "command": "bash __PROJECT_ROOT__/.claude/hooks/limit-bump-investigate-first.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
