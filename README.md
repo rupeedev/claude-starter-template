@@ -32,8 +32,40 @@ review-time (memory + docs)**.
 │   └── statusline/
 │       ├── statusline.sh                  ← custom status line (branch · context % · cost · 5h limit)
 │       └── README.md                      ← what each segment shows + customizing the palette
+├── wiki/
+│   ├── README.md                           ← purpose of the wiki root
+│   ├── concepts/README.md                 ← purpose of concept docs
+│   ├── incidents/README.md                ← purpose of incident writeups
+│   ├── sources/README.md                  ← purpose of source/reference files
+│   ├── assets/README.md                   ← purpose of asset storage
+│   └── entities/README.md                 ← purpose of entity reference pages
 └── README.md (this file)
 ```
+
+## Wiki
+
+The `wiki/` folder is the documentation area for the template. It mirrors the
+structure of the source project so future docs can be dropped into the right
+place without copying the original content.
+
+### Folder purpose
+
+| Folder | Purpose |
+|---|---|
+| `wiki/concepts/` | Long-lived product or platform explanations, runbooks, and how-to docs. |
+| `wiki/incidents/` | Incident reports, lessons learned, and postmortem-style notes. |
+| `wiki/sources/` | Reference material and raw source artifacts that support wiki pages. |
+| `wiki/assets/` | Images and supporting files used by wiki content. |
+| `wiki/entities/` | Short reference pages for named systems, services, or components. |
+
+### How to use it
+
+1. Put new explanatory docs in `wiki/concepts/`.
+2. Put incident writeups in `wiki/incidents/`.
+3. Put reference-only source material in `wiki/sources/`.
+4. Put images and other static files in `wiki/assets/`.
+5. Put concise entity pages in `wiki/entities/`.
+6. Keep each folder’s `README.md` up to date when the purpose changes.
 
 ## What is intentionally **NOT** here
 
@@ -47,7 +79,6 @@ when the project warrants — not before:
 - A custom ESLint / Tailwind responsive lint plugin
 - Playwright responsive snapshots
 - Slash commands like `/audit-mobile`, `/diff-gaps`, `/feature-dev` skill
-- A wiki / incident log
 
 Add them when the project warrants — not before.
 
