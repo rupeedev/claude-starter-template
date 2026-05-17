@@ -1,0 +1,59 @@
+name: Claude Code
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  pull_request_review:
+    types: [submitted]
+  issues:
+    types: [opened, assigned]
+
+concurrency:
+  group: claude-${{ github.event.issue.number || github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  claude:
+    if: |
+      github.event_name == 'issues' ||
+      (github.event_name == 'issue_comment' && !endsWith(github.event.comment.user.login, '[bot]')) ||
+      (github.event_name == 'pull_request_review_comment' && !endsWith(github.event.comment.user.login, '[bot]')) ||
+      (github.event_name == 'pull_request_review' && !endsWith(github.event.review.user.login, '[bot]'))
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      actions: read
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Run Claude Code
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+
+          # Default comment trigger remains @claude.
+          trigger_phrase: "@claude"
+
+          # This is the key piece for "assign issue to Claude" automation.
+          # When an issue is assigned to the GitHub user/app named "claude",
+          # the action treats that assignment as the trigger even without @claude.
+          assignee_trigger: "claude"
+
+          additional_permissions: |
+            actions: read
+
+          # Optional examples:
+          # label_trigger: "claude"
+          # base_branch: "main"
+          # claude_args: |
+          #   --max-turns 10
+
